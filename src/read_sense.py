@@ -20,13 +20,6 @@ import time
 #import pymysql as mdb 
 import datetime
 
-databaseUsername="balloon"
-databasePassword="High#Ball" 
-databaseName="WordpressDB" #do not change unless you named the Wordpress database with some other name
-
-#sensor=Adafruit_DHT.DHT22 #if not using DHT22, replace with Adafruit_DHT.DHT11 or Adafruit_DHT.AM2302
-#pinNum=4 #if not using pin number 4, change here
-
 fname="/var/www/html/data/sense.csv"
 i2c = board.I2C()
 sensor = MS8607(i2c)
