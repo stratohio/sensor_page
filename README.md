@@ -21,7 +21,10 @@ Temperature.html is the code to generate a plot it uses the
  I assume the web structure is 
  
  /var/www/html/html/Temperature.html
- 
+ /var/www/html/html/Pressure.html
+ /var/www/html/html/Humidity.html
+ /var/www/html/html/MS8607_sensors.html
+  
  /var/www/html/src/d3.v7.min.js (or d3.v7.js)
  
  /var/www/html/data/sense.csv
