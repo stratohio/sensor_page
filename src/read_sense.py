@@ -73,7 +73,7 @@ if os.path.exists(fname):  #create file
 else:
 	print("file ", fname, " Does not exist")
 	f = open(fname, 'w')
-	f.write('"Datetime", "Temp_C", "Pressure_hpa", "Humidity_pc", "time_m"\n')
+	f.write('Datetime,Temp_C,Pressure_hpa,Humidity_pc,time_m\n')
 	f.close()
 	print("file ", fname, " Created")
 
