@@ -1,0 +1,20 @@
+header {
+	background-color: darkblue;
+	text-align: center;
+	text-transform: capitalize;
+	color: lightgreen;
+	}
+nav{background-color: lightblue;}
+footer {
+	background-color: lightblue;
+}
+main(
+	background-color: blue;
+	)
+	
+.centerImg {
+	display: block;
+	width: 50%;
+	margin-left: auto;
+	margin-right: auto;
+}
