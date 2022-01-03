@@ -4,8 +4,7 @@
 # store in csv files
 
 import sys
-# import Adafruit_DHT
-#sudo pip3 install adafruit-blinka
+# sudo pip3 install adafruit-blinka
 import board
 
 #sudo pip3 install adafruit_circuitpython_ms6807
@@ -15,16 +14,26 @@ from adafruit_ms8607 import MS8607
 #import re 
 import os 
 import time 
-#import MySQLdb as mdb 
+ 
 #sudo pip3 install PyMySQL
 #import pymysql as mdb 
 import datetime
+
+import math
+
+
 
 fname="/var/www/html/data/sense.csv"
 i2c = board.I2C()
 sensor = MS8607(i2c)
 
-
+def dewPoint(Temperature, humidity):
+	lamda=5390.0
+	K0 = 273.15
+	dp = lamda*(Temperature+K0) / (lamda- ((Temperature+K0) * math.log(humidity/100.0)))
+	print ("dew point:  %.1f C" % (dp-K0))
+	return dp-K0
+	
 def saveToDatabase(temperature,pressure,humidity):
 
 	currentDate=datetime.datetime.now().date()
@@ -33,12 +42,9 @@ def saveToDatabase(temperature,pressure,humidity):
 	currentDate = now.date()
 	midnight=datetime.datetime.combine(now.date(),datetime.time())
 	minutes=((now-midnight).seconds)/60 #minutes after midnight, use datead$
-#	hours  = ((now-currentDate).seconds)/3600.0 # hours
-
-#	print (now, "  ", currentDate, " \t", minutes/60)
 
 	scmd1 = "INSERT INTO temperatures (temperature,pressure,humidity, dtMeasured,dateMeasured, hourMeasured) "
-	scmd2  = "%s,%.2f,%.2f,%.2f,%.2f\n" %(now,temperature,pressure,humidity,minutes)
+	scmd2  = "%s,%.2f,%.2f,%.2f,%.2f\n" %(now,temperature,pressure,humidity,dewPoint(temperature,humidity))
 	print(scmd2)
 	f=open(fname,'a')
 	f.write(scmd2)
@@ -49,7 +55,6 @@ def saveToDatabase(temperature,pressure,humidity):
 
 def readInfo():
 
-#	humidity, temperature = Adafruit_DHT.read_retry(sensor, pinNum)#read_retry - retry getting temperatures for 15 times
 	temperature, pressure = sensor.pressure_and_temperature
 	humidity = sensor.relative_humidity
 	
@@ -73,7 +78,7 @@ if os.path.exists(fname):  #create file
 else:
 	print("file ", fname, " Does not exist")
 	f = open(fname, 'w')
-	f.write('Datetime,Temp_C,Pressure_hpa,Humidity_pc,time_m\n')
+	f.write('Datetime,Temp_C,Pressure_hpa,Humidity_pc,DewPt\n')
 	f.close()
 	print("file ", fname, " Created")
 
