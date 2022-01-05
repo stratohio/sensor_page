@@ -39,3 +39,13 @@ Temperature.html is the code to generate a plot.  It uses D3,
  
  /var/www/html/css/main.css - my css file, for formating local web pages.
  Yours is probably better.
+ 
+ update 22-01-05
+ read_sense.py has been updated to include a dew point calculation.
+ sense.csv sample data has been updated to include dew point.
+ DewPoint.html has been added to plot DewPoint data.
+ 
+ Documentation:
+ Humidity_220104.pdf discusses how to calculate water vapor saturation pressures and Dew Points.
+ 
+ 
