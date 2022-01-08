@@ -48,4 +48,9 @@ Temperature.html is the code to generate a plot.  It uses D3,
  Documentation:
  Humidity_220104.pdf discusses how to calculate water vapor saturation pressures and Dew Points.
  
+ update 22-01-08
+ read_sense.py updated to Alduchov & Eskridge formula and coefficients
+ test_dp.py check/verify dew point calculation.  
+ note: according to HP 33S, math.log() appears to be more accurate than spreadsheet ln().
+ 
  
