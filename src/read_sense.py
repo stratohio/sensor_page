@@ -3,6 +3,8 @@
 # read data sensors 
 # store in csv files
 
+# 22-01-08: Update Dew point calculation to Alduchov-Eskridge[1995] coefficients
+
 import sys
 # sudo pip3 install adafruit-blinka
 import board
@@ -27,12 +29,13 @@ fname="/var/www/html/data/sense.csv"
 i2c = board.I2C()
 sensor = MS8607(i2c)
 
-def dewPoint(Temperature, humidity):
-	lamda=5390.0
-	K0 = 273.15
-	dp = lamda*(Temperature+K0) / (lamda- ((Temperature+K0) * math.log(humidity/100.0)))
-	print ("dew point:  %.1f C" % (dp-K0))
-	return dp-K0
+def dewPoint(temp, humidity):
+	beta = 17.625
+	lamda = 243.04 # (C)
+	dp = lamda * (math.log(humidity/100.0)+((beta*temp)/(lamda+temp))) 
+	dp = dp/(beta - (math.log(humidity/100.0)+ ((beta*temp)/(lamda+temp))))
+	print ("dew point:  %.1f C" % dp)
+	return dp
 	
 def saveToDatabase(temperature,pressure,humidity):
 
