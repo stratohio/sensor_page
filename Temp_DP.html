@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<!-- https://gist.github.com/d3noob/15e4f2a49d0d25468e76ab6717cd95e7 -->
+
+<!-- Try to plot two curves, Temperature and Dew Point -->
+
+<meta charset="utf-8">
+<style> /* set the CSS */
+
+.line {
+  fill: none;
+  stroke: steelblue;
+  stroke-width: 2px;
+}
+.line1 {
+  fill: none;
+  stroke: red;
+  stroke-width: 2px;
+}
+.axis path,
+.axis line {
+    fill: none;
+    stroke: grey;
+    stroke-width: 1;
+    shape-rendering: crispEdges;
+}
+
+</style>
+<body>
+
+<div id="plotHere">  </div>
+
+<!-- load the d3.js library -->    	
+<script src="../src/d3.v7.min.js"></script>
+<script>
+//------------------------1. PREPARATION------------------------//
+
+const title = "Temperature and Dew Point in Back Room (MS8607)";
+const xlabel = "Date";
+const ylabel = "Temperature (F)";
+//-----------------------------SVG------------------------------// 
+// const width = 960;
+// const height = 500;
+// const margin = 5;
+// const padding = 6;
+// const adj = 30;
+const ticIn = -6;
+
+// set the dimensions and margins of the graph
+var margin = {top: 25, right: 30, bottom: 35, left: 60},
+    width = 750 - margin.left - margin.right,
+    height = 500 - margin.top - margin.bottom;
+
+//----------------------------DATA------------------------------// 
+
+// set the ranges
+var x = d3.scaleTime().range([0, width]);
+var y = d3.scaleLinear().range([height, 0]);
+
+// define the line
+var valueline = d3.line()
+    .x(function(d) { return x(d.date); })
+    .y(function(d) { return y(d.dp); });
+   
+var valueline2 = d3.line()
+    .x(function(d) {return x(d.date); })
+    .y(function(d) {return y(d.temp); });
+
+// append the svg obgect to the body of the page
+// appends a 'group' element to 'svg'
+// moves the 'group' element to the top left margin
+// var svg = d3.select("body").append("svg")
+var svg = d3.select("#plotHere").append("svg")
+    .attr("width", width + margin.left + margin.right)
+    .attr("height", height + margin.top + margin.bottom)
+  .append("g")
+    .attr("transform",
+          "translate(" + margin.left + "," + margin.top + ")");
+
+//----------------------------DATA------------------------------// 
+// parse the date / time
+var parseTime = d3.timeParse("%Y-%m-%d %H:%M:%S.%f");
+
+// Get the data
+d3.csv("../data/sense.csv").then(function(data) {
+
+  // format the data
+  data.forEach(function(d) {
+      d.date = parseTime(d.Datetime);
+      d.temp = +((d.Temp_C*1.8)+32.0);
+      d.pres = +d.Pressure_hpa;
+      d.hum = +d.Humidity_pc;
+      d.dp = +((d.DewPt*1.8)+32.0);
+  });
+
+//--------------------------SCALES------------------------------// 
+
+  // Scale the range of the data
+  x.domain(d3.extent(data, function(d) { return d.date; })).nice();
+  maxy1 = d3.max(data, function(d) { return +d.temp; });
+  maxy2 = d3.max(data, function(d) { return +d.dp; });
+  maxy =  d3.max([maxy1,maxy2]);
+  miny1 = d3.min(data, function(d) { return +d.temp; });
+  miny2 = d3.min(data, function(d) { return +d.dp; });
+  miny = d3.min([miny1,miny2]);
+  
+  // y.domain(d3.extent(data, function(d) { return d.dp; })).nice();
+  y.domain([miny,maxy]).nice();
+
+//-------------------------- AXES ------------------------------// 
+
+
+//-----------------------2. Drawing  ------------------------------// 
+
+
+//-------------------------- AXES ------------------------------// 
+
+  // Add the x Axis
+  // https://www.d3indepth.com/axes/
+  
+  svg.append("g")
+      .attr("transform", "translate(0," + height + ")")
+      .call(d3.axisBottom(x).tickSize(ticIn).tickPadding(10));
+  svg.append("g")
+//      .attr("transform", "translate(0,0)")
+      .call(d3.axisTop(x).tickSize(ticIn).tickFormat(""));
+
+  svg.append("text")  // text label for the x axis
+    	  .attr("x", width/2)
+        .attr("y",height+margin.bottom)
+        .style("font","14px sans-serif")
+        .style("text-anchor", "middle")
+        .text(xlabel);
+
+  // Add the y Axis
+  svg.append("g")
+      .call(d3.axisLeft(y).tickSize(ticIn).tickPadding(6));
+   svg.append("g")
+      .attr("transform","translate(" + width + ",0)")
+      .call(d3.axisRight(y).tickSize(ticIn).tickFormat(""));
+   
+  
+  svg.append("text")  // text label for y axis
+        .attr("transform", "rotate(-90)")
+        .attr("y", 0 - margin.left)
+        .attr("x",0 - (height / 2))
+        .attr("dy", "1em")
+        .style("font","14px sans-serif")
+        .style("text-anchor", "middle")
+        .text(ylabel);
+        
+       svg.append("text")  // Title
+        .attr("x", (width / 2))             
+        .attr("y", 0 - (margin.top / 2))
+        .attr("text-anchor", "middle") 
+        .style("font","16px sans-serif" ) 
+        .text(title);
+        
+//-------------------------- LINES ------------------------------// 
+ // Add the valueline path.
+  svg.append("path")
+      .data([data])
+      .attr("class", "line")
+      .attr("d", valueline);
+      
+  svg.append("path")
+      .data([data])
+      .attr("class", "line1")
+      .attr("d", valueline2);
+      
+
+
+
+
+});
+
+</script>
+
+
+</body>
