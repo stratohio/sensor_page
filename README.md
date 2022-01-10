@@ -53,4 +53,8 @@ Temperature.html is the code to generate a plot.  It uses D3,
  test_dp.py check/verify dew point calculation.  
  note: according to HP 33S, math.log() appears to be more accurate than spreadsheet ln().
  
+ update 22-01-10
+ added Temp_DP.html
+ plot both temperature and dew point on save graph
+ 
  
