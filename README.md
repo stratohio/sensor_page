@@ -54,7 +54,7 @@ Temperature.html is the code to generate a plot.  It uses D3,
   
  update 22-01-10
  added Temp_DP.html
- plot both temperature and dew point on save graph
+ plot both temperature and dew point on same graph
  
  Contact:
  If you try to use this code, please let me know of your experience.
