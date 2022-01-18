@@ -56,6 +56,14 @@ Temperature.html is the code to generate a plot.  It uses D3,
  added Temp_DP.html
  plot both temperature and dew point on same graph
  
+ update: 22-01-18
+ added Pres_SL.html
+ which includes a simple adjustment to Sea Level Pressure.
+ this is estimated as a constent offset pressure, 
+ and does not include corrections due to outside temperature.  
+ It also adds labels do the lines.  This is not a clean as I would like, but works
+ for now.  
+ 
  Contact:
  If you try to use this code, please let me know of your experience.
  stratohio40 (at) gmail.com
