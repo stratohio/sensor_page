@@ -49,19 +49,22 @@ Temperature.html is the code to generate a plot.  It uses D3,
  Humidity_220104.pdf discusses how to calculate water vapor saturation pressures and Dew Points.
  
  update 22-01-08
+ 
  read_sense.py updated to Alduchov & Eskridge formula and coefficients
  test_dp.py check/verify dew point calculation.  
   
  update 22-01-10
+ 
  added Temp_DP.html
  plot both temperature and dew point on same graph
  
  update: 22-01-18
+ 
  added Pres_SL.html
  which includes a simple adjustment to Sea Level Pressure.
  this is estimated as a constent offset pressure, 
  and does not include corrections due to outside temperature.  
- It also adds labels do the lines.  This is not a clean as I would like, but works
+ It also adds labels to the lines.  This is not a clean or general as I would like, but works
  for now.  
  
  Contact:
