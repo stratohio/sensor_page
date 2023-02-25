@@ -57,7 +57,7 @@ Temperature.html is the code to generate a plot.  It uses D3,
  
  added Temp_DP.html
  plot both temperature and dew point on same graph
- 
+ specifically
  update: 22-01-18
  
  added Pres_SL.html
@@ -66,6 +66,11 @@ Temperature.html is the code to generate a plot.  It uses D3,
  and does not include corrections due to outside temperature.  
  It also adds labels to the lines.  This is not a clean or general as I would like, but works
  for now.  
+ 
+ update:23-02-24
+ added docs/Pico_I2C.pdf 
+ "Raspberry Pico and I2C"
+ How to use I2C sensors (Specifically BMP280) with the Raspberry Pi.
  
  Contact:
  If you try to use this code, please let me know of your experience.
